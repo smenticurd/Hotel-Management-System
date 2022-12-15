@@ -1,0 +1,19 @@
+* ADDRESSES
+
+city, state, country -> zipcode
+address_id -> zipcode
+zipcode -> city, state, country
+
+* CENTERS
+
+center_id -> center_name, center_contact_number, center_email, center_website, address_link_id
+address_link_id, center_id -> center_name, center_contact_number, center_email, center_website
+
+* GUESTS
+
+guest_id -> guest_first_name, guest_last_name, guest_contact_number, guest_email, guest_credit_card
+guets_id, address_link_id -> guest_first_name, guest_last_name, guest_contact_number, guest_email, guest_credit_card
+
+* BOOKINGS
+
+booking_id -> booking_date, duration, check_in_date, check_out_date, booking_payment_type, total_rooms_booked, total_amount
