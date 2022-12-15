@@ -1,0 +1,5 @@
+--Get a list of all hotels that do not have any rooms
+
+SELECT hotel_id FROM Hotels
+EXCEPT
+SELECT room_id FROM Rooms
