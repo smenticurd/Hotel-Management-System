@@ -1,0 +1,9 @@
+--List the details of all rooms at the some hotel, 
+--including the name of the guest staying in the room, 
+--if the room is occupied.
+
+SELECT r.room_booked_id, g.guest_first_name as guest_name
+FROM rooms_booked r
+LEFT JOIN bookings b ON r.booking_link_id = b.booking_id
+LEFT JOIN guests g ON b.guest_link_id = g.guest_id
+WHERE b.hotel_link_id = 1;
