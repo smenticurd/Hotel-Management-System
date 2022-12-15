@@ -1,0 +1,5 @@
+--Get a list of all hotels and rooms, with only the hotel_id and room number:
+
+SELECT hotel_id FROM Hotels
+UNION
+SELECT room_number FROM Rooms;
