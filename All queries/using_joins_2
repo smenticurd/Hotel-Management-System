@@ -1,0 +1,11 @@
+--Get customers who checked in the current month and have a total 
+--bill services that is more than 1000
+
+SELECT b.guest_link_id, SUM(s.service_cost) as total_bill
+FROM bookings b
+JOIN hotel_services_used_by_guests su ON b.booking_id = su.booking_link_id
+JOIN hotel_services s ON su.service_link_id = s.service_id
+WHERE EXTRACT(YEAR FROM b.check_in_date) = EXTRACT(YEAR FROM CURRENT_DATE)
+  AND EXTRACT(MONTH FROM b.check_in_date) = EXTRACT(MONTH FROM CURRENT_DATE)
+GROUP BY b.guest_link_id
+HAVING SUM(s.service_cost) > 1000
