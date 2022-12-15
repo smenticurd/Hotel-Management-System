@@ -1,0 +1,12 @@
+--Update the rating of a hotel and insert a new review:
+
+BEGIN TRANSACTION;
+
+UPDATE Hotels
+SET star_rating_link_id = 104
+WHERE hotel_id = 101;
+
+INSERT INTO star_ratings
+VALUES (104, 1);
+
+COMMIT;
