@@ -1,0 +1,7 @@
+--Find the most popular check-in day of the week
+
+SELECT check_in_date, COUNT(*) AS num_bookings
+FROM bookings
+GROUP BY check_in_date
+ORDER BY num_bookings DESC
+LIMIT 1
