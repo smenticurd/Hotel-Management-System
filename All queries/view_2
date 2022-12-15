@@ -1,0 +1,13 @@
+--Create view named hotel_guests to get the details of the guests
+
+/*CREATE OR REPLACE VIEW hotel_guests AS
+SELECT guest_first_name AS first_name, guest_last_name AS last_name, guest_email AS email, guest_contact_number AS contuct_number,country,state,zipcode
+FROM guests
+JOIN addresses ON addresses.address_id = guests.address_link_id
+WHERE guests.guest_id IN
+		(SELECT distinct guest_link_id 		
+		FROM bookings
+		WHERE hotel_link_id = 1);			
+		*/
+    
+SELECT * FROM hotel_guests;
