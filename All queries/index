@@ -1,0 +1,10 @@
+--Get the top 10 highest-rated hotels
+
+CREATE INDEX rating_idx ON star_ratings (stars DESC);
+
+SELECT h.hotel_name, s.stars
+FROM star_ratings s
+INNER JOIN hotels h 
+ON s.star_rating_id = h.star_rating_link_id
+ORDER BY stars DESC
+LIMIT 10;
