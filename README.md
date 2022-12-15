@@ -4,5 +4,8 @@ A hotel management database system is a computerized system that is used to mana
 
 In this database I have 16 tables, Let's describe them:
 
-* centers - Table contains information about the various hotel chains in the database, such as the name and location of each chain.
-* 
+* CENTERS - Table contains information about the various hotel chains in the database, such as the name and location of each chain.
+
+* HOTELS - Table contains information about individual hotels, such as their location, contact information, and the hotel chain they belong to. The rooms table would store information about the rooms available at each hotel, such as the room type and number.
+
+* C
