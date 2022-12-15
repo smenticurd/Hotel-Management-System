@@ -1,0 +1,7 @@
+--Find the total number of bookings made by each customer, 
+--along with their contact information:
+
+SELECT g.guest_id, COUNT(b.booking_id) AS total_bookings
+FROM guests g
+INNER JOIN bookings b ON g.guest_id = b.guest_link_id
+GROUP BY g.guest_id
