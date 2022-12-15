@@ -1,0 +1,12 @@
+--Find the hotel with the highest average room price in a given city
+
+
+SELECT h.hotel_name, AVG(rt.room_cost) 
+FROM rooms r
+INNER JOIN room_types rt ON rt.room_type_id = r.room_type_link_id
+INNER JOIN hotels h ON r.hotel_link_id = h.hotel_id
+INNER JOIN addresses a ON a.address_id = h.address_link_id
+WHERE a.city = 'Boston'
+GROUP BY h.hotel_name
+ORDER BY AVG(rt.room_cost) DESC
+LIMIT 1;
