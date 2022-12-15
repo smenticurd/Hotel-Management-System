@@ -1,0 +1,8 @@
+--Find the top 3 guests with the most bookings
+
+SELECT g.guest_first_name, COUNT(*) AS num_bookings
+FROM bookings b
+INNER JOIN guests g ON g.guest_id = b.guest_link_id
+GROUP BY g.guest_first_name
+ORDER BY num_bookings DESC
+LIMIT 3
