@@ -1,0 +1,23 @@
+--It is defined for the bookings table and will be executed after each INSERT operation on the table. 
+--The trigger will create a new row in the bookings_audit table with the same data as the newly inserted 
+--row in the bookings table. The function_inserting() function is called by the trigger each time it is executed. 
+--The function inserts the new data into the bookings_audit table and then returns the new data. This trigger is 
+--essentially used to create an audit trail of all insertions into the bookings table.
+
+/*CREATE FUNCTION function_inserting()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO bookings_audit 
+    VALUES (NEW.booking_id, NEW.booking_date, NEW.duration, NEW.check_in_date, NEW.check_out_date, NEW.booking_payment_type, NEW.total_rooms_booked, NEW.hotel_link_id, NEW.guest_link_id, NEW.employee_link_id, NEW.total_amount);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER bookings_audit_trigger
+AFTER INSERT ON bookings
+FOR EACH ROW
+EXECUTE PROCEDURE function_inserting();
+*/
+
+insert into bookings
+values(101, '2018-08-13', '4', '2018-08-17', '2018-08-21', 'card', 3, 250, 2, 4, 1);
