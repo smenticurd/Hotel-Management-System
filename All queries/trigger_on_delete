@@ -1,0 +1,27 @@
+--It is defined for the bookings table and will be executed after
+--each DELETE operation on the table. The trigger will create a new 
+--row in the bookings_audit table with the data of the deleted row in 
+--the bookings table. The function_deleting() function is called by the 
+--trigger each time it is executed. The function inserts the data of the 
+--deleted row into the bookings_audit table and then returns the deleted data. 
+--This trigger is essentially used to create an audit trail of all deletions from the bookings table.
+
+/*CREATE FUNCTION function_deleting()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO bookings_audit 
+	VALUES (OLD.booking_id, OLD.booking_date, OLD.duration, OLD.check_in_date, OLD.check_out_date, OLD.booking_payment_type, OLD.total_rooms_booked, OLD.hotel_link_id, OLD.guest_link_id, OLD.employee_link_id, OLD.total_amount);
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER bookings_audit_trigger2
+AFTER DELETE ON bookings
+FOR EACH ROW
+EXECUTE PROCEDURE function_deleting();
+*/
+
+--delete from bookings
+--where booking_id = 101;
+
+--select * from bookings_audit;
