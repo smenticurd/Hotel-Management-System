@@ -1,0 +1,5 @@
+-- How many hotels are in a center?
+
+	SELECT count(*) AS total_hotels_in	 -- count of total hotels
+	FROM center_has_hotel 
+	WHERE center_link_id = 1;   -- for center under id 1
