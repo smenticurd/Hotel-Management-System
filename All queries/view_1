@@ -1,0 +1,10 @@
+-- Create view named hotel_employees to get details of the all the employees
+/*
+CREATE OR REPLACE VIEW hotel_employees AS
+	SELECT employee_first_name AS first_name, employee_last_name AS last_name, employee_email AS email, employee_contact_number AS contact_number, department_name AS department
+	FROM employees
+	JOIN departments
+	ON departments.department_id = employees.department_link_id;
+*/	
+	
+SELECT * FROM hotel_employees;
