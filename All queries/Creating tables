@@ -1,0 +1,347 @@
+BEGIN;
+
+
+DROP TABLE IF EXISTS public.centers;
+
+CREATE TABLE IF NOT EXISTS public.centers
+(
+    center_id integer NOT NULL,
+    center_name character varying(50),
+    center_contact_number character varying(50),
+    center_email character varying(50),
+    center_website character varying(50),
+    address_link_id integer NOT NULL,
+    CONSTRAINT "Hotel Management System " PRIMARY KEY (center_id, address_link_id)
+);
+
+DROP TABLE IF EXISTS public.center_has_hotel;
+
+CREATE TABLE IF NOT EXISTS public.center_has_hotel
+(
+    center_link_id integer NOT NULL,
+    hotel_link_id integer NOT NULL,
+    PRIMARY KEY (center_link_id, hotel_link_id)
+);
+
+DROP TABLE IF EXISTS public.hotels;
+
+CREATE TABLE IF NOT EXISTS public.hotels
+(
+    hotel_id integer NOT NULL,
+    hotel_name character varying(50),
+    hotel_contact_number character varying(50),
+    hotel_email character varying(50),
+    hotel_website character varying(50),
+    hotel_description character varying(200),
+    hotel_floor_count integer,
+    "hotel_room capacity" integer,
+    address_link_id integer NOT NULL,
+    star_rating_link_id integer NOT NULL,
+    PRIMARY KEY (hotel_id, star_rating_link_id, address_link_id)
+);
+
+DROP TABLE IF EXISTS public.rooms;
+
+CREATE TABLE IF NOT EXISTS public.rooms
+(
+    room_id integer NOT NULL,
+    room_number integer,
+    room_type_link_id integer NOT NULL,
+    hotel_link_id integer NOT NULL,
+    PRIMARY KEY (room_id, room_type_link_id, hotel_link_id)
+);
+
+DROP TABLE IF EXISTS public.room_types;
+
+CREATE TABLE IF NOT EXISTS public.room_types
+(
+    room_type_id integer NOT NULL,
+    room_type_name character varying(50),
+    room_cost integer,
+    room_type_description character varying(200),
+    PRIMARY KEY (room_type_id)
+);
+
+DROP TABLE IF EXISTS public.star_ratings;
+
+CREATE TABLE IF NOT EXISTS public.star_ratings
+(
+    star_rating_id integer NOT NULL,
+    star_rating_image character varying(200),
+    PRIMARY KEY (star_rating_id)
+);
+
+DROP TABLE IF EXISTS public.rooms_booked;
+
+CREATE TABLE IF NOT EXISTS public.rooms_booked
+(
+    room_booked_id integer NOT NULL,
+    booking_link_id integer NOT NULL,
+    room_link_id integer NOT NULL,
+    PRIMARY KEY (room_booked_id, booking_link_id, room_link_id)
+);
+
+DROP TABLE IF EXISTS public.room_discount_rates;
+
+CREATE TABLE IF NOT EXISTS public.room_discount_rates
+(
+    discount_id integer NOT NULL,
+    discount_rate integer,
+    start_month integer,
+    end_month integer,
+    room_type_link_id integer NOT NULL,
+    PRIMARY KEY (discount_id, room_type_link_id)
+);
+
+DROP TABLE IF EXISTS public.addresses;
+
+CREATE TABLE IF NOT EXISTS public.addresses
+(
+    address_id integer NOT NULL,
+    city character varying(50),
+    state character varying(50),
+    country character varying(50),
+    zipcode character varying(50),
+    PRIMARY KEY (address_id)
+);
+
+DROP TABLE IF EXISTS public.employees;
+
+CREATE TABLE IF NOT EXISTS public.employees
+(
+    employee_id integer NOT NULL,
+    employee_first_name character varying(50),
+    employee_last_name character varying(50),
+    employee_designation character varying(50),
+    employee_contact_number character varying(50),
+    employee_email character varying(50),
+    department_link_id integer NOT NULL,
+    address_link_id integer NOT NULL,
+    hotel_link_id integer NOT NULL,
+    PRIMARY KEY (employee_id, hotel_link_id, address_link_id, department_link_id)
+);
+
+DROP TABLE IF EXISTS public.departments;
+
+CREATE TABLE IF NOT EXISTS public.departments
+(
+    department_id integer NOT NULL,
+    department_name character varying(50),
+    department_description character varying(200),
+    PRIMARY KEY (department_id)
+);
+
+DROP TABLE IF EXISTS public.bookings;
+
+CREATE TABLE IF NOT EXISTS public.bookings
+(
+    booking_id integer NOT NULL,
+    booking_date date,
+    duration character varying(50),
+    check_in_date date,
+    check_out_date date,
+    booking_payment_type character varying(50),
+    total_rooms_booked integer,
+    total_amount integer,
+    hotel_link_id integer NOT NULL,
+    employee_link_id integer NOT NULL,
+    guest_link_id integer NOT NULL,
+    PRIMARY KEY (booking_id, guest_link_id, employee_link_id, hotel_link_id)
+);
+
+DROP TABLE IF EXISTS public.hotel_services;
+
+CREATE TABLE IF NOT EXISTS public.hotel_services
+(
+    service_id integer NOT NULL,
+    service_name character varying(50),
+    service_description character varying(200),
+    service_cost integer,
+    hotel_link_id integer NOT NULL,
+    PRIMARY KEY (service_id, hotel_link_id)
+);
+
+DROP TABLE IF EXISTS public.guests;
+
+CREATE TABLE IF NOT EXISTS public.guests
+(
+    guest_id integer NOT NULL,
+    guest_first_name character varying(50),
+    guest_last_name character varying(50),
+    guest_contact_number character varying(50),
+    guest_email character varying(50),
+    guest_credit_card character varying(50),
+    address_link_id integer NOT NULL,
+    PRIMARY KEY (guest_id, address_link_id)
+);
+
+DROP TABLE IF EXISTS public.hotel_services_used_by_guests;
+
+CREATE TABLE IF NOT EXISTS public.hotel_services_used_by_guests
+(
+    service_used_id integer NOT NULL,
+    service_link_id integer NOT NULL,
+    booking_link_id integer NOT NULL,
+    PRIMARY KEY (service_used_id, service_link_id, booking_link_id)
+);
+
+ALTER TABLE IF EXISTS public.centers
+    ADD FOREIGN KEY (address_link_id)
+    REFERENCES public.addresses (address_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.center_has_hotel
+    ADD FOREIGN KEY (center_link_id)
+    REFERENCES public.centers (center_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.center_has_hotel
+    ADD FOREIGN KEY (hotel_link_id)
+    REFERENCES public.hotels (hotel_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.hotels
+    ADD FOREIGN KEY (address_link_id)
+    REFERENCES public.addresses (address_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.hotels
+    ADD FOREIGN KEY (star_rating_link_id)
+    REFERENCES public.star_ratings (star_rating_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.rooms
+    ADD FOREIGN KEY (hotel_link_id)
+    REFERENCES public.hotels (hotel_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.rooms
+    ADD FOREIGN KEY (room_type_link_id)
+    REFERENCES public.room_types (room_type_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.rooms_booked
+    ADD FOREIGN KEY (booking_link_id)
+    REFERENCES public.bookings (booking_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.rooms_booked
+    ADD FOREIGN KEY (room_link_id)
+    REFERENCES public.rooms (room_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.room_discount_rates
+    ADD FOREIGN KEY (room_type_link_id)
+    REFERENCES public.room_types (room_type_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.employees
+    ADD FOREIGN KEY (department_link_id)
+    REFERENCES public.departments (department_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.employees
+    ADD FOREIGN KEY (hotel_link_id)
+    REFERENCES public.hotels (hotel_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.employees
+    ADD FOREIGN KEY (address_link_id)
+    REFERENCES public.addresses (address_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.bookings
+    ADD FOREIGN KEY (hotel_link_id)
+    REFERENCES public.hotels (hotel_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.bookings
+    ADD FOREIGN KEY (guest_link_id)
+    REFERENCES public.guests (guest_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.bookings
+    ADD FOREIGN KEY (employee_link_id)
+    REFERENCES public.employees (employee_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.hotel_services
+    ADD FOREIGN KEY (hotel_link_id)
+    REFERENCES public.hotels (hotel_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.guests
+    ADD FOREIGN KEY (address_link_id)
+    REFERENCES public.addresses (address_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.hotel_services_used_by_guests
+    ADD FOREIGN KEY (booking_link_id)
+    REFERENCES public.bookings (booking_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.hotel_services_used_by_guests
+    ADD FOREIGN KEY (service_link_id)
+    REFERENCES public.hotel_services (service_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+END;
