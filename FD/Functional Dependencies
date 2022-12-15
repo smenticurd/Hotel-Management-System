@@ -66,7 +66,12 @@ service_used_id, service_link_id, booking_link_id ---> composite keys, cannot ex
 
 * ROOM_DISCOUNT_RATES 
 
-discount_id ---> discount rate, 
+discount_id ---> discount rate, start_month, end_month
+discount_id, room_type_link_id
+
+* ROOM_TYPES 
+
+room_type_id ---> room_type_name, room_cost, room_type_description
 
 
 
