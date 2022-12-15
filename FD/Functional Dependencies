@@ -1,19 +1,73 @@
 * ADDRESSES
 
-city, state, country -> zipcode
-address_id -> zipcode
+city, state, country ---> zipcode
+address_id ----> zipcode
 zipcode -> city, state, country
 
 * CENTERS
 
-center_id -> center_name, center_contact_number, center_email, center_website, address_link_id
-address_link_id, center_id -> center_name, center_contact_number, center_email, center_website
+center_id ---> center_name, center_contact_number, center_email, center_website, address_link_id
+address_link_id, center_id ---> center_name, center_contact_number, center_email, center_website
 
 * GUESTS
 
-guest_id -> guest_first_name, guest_last_name, guest_contact_number, guest_email, guest_credit_card
-guets_id, address_link_id -> guest_first_name, guest_last_name, guest_contact_number, guest_email, guest_credit_card
+guest_id ---> guest_first_name, guest_last_name, guest_contact_number, guest_email, guest_credit_card
+guets_id, address_link_id ---> guest_first_name, guest_last_name, guest_contact_number, guest_email, guest_credit_card
 
 * BOOKINGS
 
-booking_id -> booking_date, duration, check_in_date, check_out_date, booking_payment_type, total_rooms_booked, total_amount
+booking_id ---> booking_date, duration, check_in_date, check_out_date, booking_payment_type, total_rooms_booked, total_amount
+booking_id, hotel_link_id, employee_link_id, guest_link_id ---> booking_date, duration, check_in_date, check_out_date, booking_payment_type, total_rooms_booked, total_amount
+
+* DEPARTMENTS
+
+department_id ---> department_name, department_description
+
+* CENTER_HAS_HOTEL
+
+center_link_id, hotel_link_id ---> composite keys, cannot exists without each other
+
+* STAR_RATINGS
+
+star_rating_id ---> star
+
+* EMPLOYEES
+
+employee_id ---> employee_first_name, employee_last_name, employee_designation, employee_contact_nummber, employee_email
+employee_id, department_link_id, address_link_id, hotel_link_id ---> employee_first_name, employee_last_name, employee_designation, employee_contact_nummber, employee_email
+
+* HOTELS
+
+hotel_id ---> hotel_name, hotel_contact_number, hotel_email, hotel_website, hotel_description, hotel_floor_count
+hotel_link_id, addresses_link_id, star_rating_link_id ---> hotel_name, hotel_contact_number, hotel_email, hotel_website, hotel_description, hotel_floor_count
+
+* ROOMS 
+
+room_id ---> room_number
+room_id, room_type_link_id, hotel_link_id ---> room_number
+
+* ROOMS_BOOKED 
+
+room_booked_id, booking_link_id, room_link_id ---> composite keys, cannot exists without each other
+
+* PROMOTIONS
+
+promotion_id ---> promotion_name, promotion_description, promotion_discount, promotion_start_date, promotion_end_date
+promotion_id, hotel_link_id ---> promotion_name, promotion_description, promotion_discount, promotion_start_date, promotion_end_date
+
+* HOTEL_SERVICES
+
+service_id ---> service_name, service_description, service_cost
+service_id, hotel_link_id ---> service_name, service_description, service_cost
+
+* HOTEL_SERVICES_USED_BY_GUESTS
+
+service_used_id, service_link_id, booking_link_id ---> composite keys, cannot exists without each other
+
+* ROOM_DISCOUNT_RATES 
+
+discount_id ---> discount rate, 
+
+
+
+
