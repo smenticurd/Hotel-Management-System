@@ -1,0 +1,8 @@
+--This query calculates the sum of the total_amount column 
+--for all rows in the booking table that have a date_booked 
+--value between the first and the last day of the month specified 
+--in the WHERE clause.
+
+SELECT SUM(total_amount) as total_profit
+FROM bookings
+WHERE booking_date BETWEEN '2018-01-01' AND '2018-01-31'
