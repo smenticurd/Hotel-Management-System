@@ -1,0 +1,9 @@
+--This query counts the number of distinct values in 
+--the customer_id column for all rows in the booking 
+--table that have a date_booked value between the first 
+--and the last day of August for the year specified 
+--in the WHERE clause.
+
+SELECT COUNT(DISTINCT guest_link_id) as num_guests
+FROM bookings
+WHERE booking_date BETWEEN 'YYYY-08-01' AND 'YYYY-08-31';
